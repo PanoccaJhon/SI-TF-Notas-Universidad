@@ -1,0 +1,25 @@
+// STUDENTS
+
+// Create a student
+###
+POST http://localhost:8081/student/create
+Content-Type: application/json
+
+{
+  "name": "John",
+  "lastName": "Doe",
+  "email": "example@mail.com",
+  "phone": "1234567890",
+  "cui": "1234567890"
+}
+###
+
+// Get all students
+###
+GET http://localhost:8081/student/all
+###
+
+// Get student by id
+###
+GET http://localhost:8081/student/1
+###

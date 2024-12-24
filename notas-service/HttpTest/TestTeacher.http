@@ -1,0 +1,25 @@
+
+// TEACHERS
+
+// create a teacher
+###
+POST http://localhost:8081/teacher/create
+Content-Type: application/json
+
+{
+  "name": "Jane",
+  "lastName": "Doe",
+  "email": "example@mail.com",
+  "phone": "1234567890"
+}
+###
+
+// get all teachers
+###
+GET http://localhost:8081/teacher/all
+###
+
+// get teacher by id
+###
+GET http://localhost:8081/teacher/1
+###

@@ -1,0 +1,26 @@
+
+// COURSES
+
+// create a course
+###
+POST http://localhost:8081/course/create
+Content-Type: application/json
+
+{
+  "code": "MATH101",
+  "name": "Math",
+  "description": "Math course",
+  "credits": 3,
+  "teacherId": 1
+}
+###
+
+// get all courses
+###
+GET http://localhost:8081/course/all
+###
+
+// get course by id
+###
+GET http://localhost:8081/course/1
+###

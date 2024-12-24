@@ -1,0 +1,65 @@
+
+services:
+  ## PosgreSQL database for notas - service
+    db-notas:
+        image: postgres:15.2-alpine
+        container_name: notas-db
+        environment:
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
+          POSTGRES_DB: notas
+        ports:
+        - "5432:5432"
+        volumes:
+        - notas-db-data:/var/lib/postgresql/data
+
+    ## PosgreSQL database for personal - service
+    db-personal:
+        image: postgres:15.2-alpine
+        container_name: personal-db
+        environment:
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
+          POSTGRES_DB: personal
+        ports:
+        - "5433:5432"
+        volumes:
+        - personal-db-data:/var/lib/postgresql/data
+    # Keycloak database
+    db-keycloak:
+      image: postgres:15.2-alpine # Usa la versión deseada de PostgreSQL
+      container_name: keycloak-db
+      environment:
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: keycloak
+        POSTGRES_DB: keycloak
+      volumes:
+        - pg_keycloak_data:/var/lib/postgresql/data
+      ports:
+        - "5435:5432"
+
+    keycloak:
+      image: quay.io/keycloak/keycloak:22.0.0 # Reemplaza por la versión que desees usar
+      container_name: keycloak
+      command: >
+        start-dev
+        --http-relative-path=/auth
+      environment:
+        KEYCLOAK_ADMIN: admin # Usuario administrador
+        KEYCLOAK_ADMIN_PASSWORD: admin123 # Contraseña del administrador
+        KC_DB: postgres
+        KC_DB_URL_HOST: db-keycloak
+        KC_DB_URL_PORT: 5432
+        KC_DB_USERNAME: keycloak
+        KC_DB_PASSWORD: keycloak
+        KC_HOSTNAME: localhost
+      ports:
+        - "8181:8080"
+      depends_on:
+        - db-keycloak
+
+
+volumes:
+    notas-db-data:
+    personal-db-data:
+    pg_keycloak_data:
